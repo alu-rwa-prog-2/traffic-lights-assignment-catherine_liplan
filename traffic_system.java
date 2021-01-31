@@ -1,3 +1,4 @@
+// Author: Liplan Lekipising
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
@@ -6,21 +7,21 @@ import java.util.TimerTask;
 
 public class traffic_system {
     public static void main(String[] args){
-        // cars in the street - before the roundabout
-        ArrayList<String> AllCars = new ArrayList<String>();
+        // cars in the street - before the traffic lights
+        ArrayList<String> before_light = new ArrayList<String>();
         //generate cars
-        for (int i = 1; AllCars.size() < 100; i++){
+        for (int i = 1; before_light.size() < 100; i++){
             String add_int_str = Integer.toString(i);
             String name = "car" + add_int_str;
-            AllCars.add(name);
+            before_light.add(name);
 
         }
 
         // cars in my collection which is EQUAL to the cars present in the round about
-        ArrayList<String> round_about = new ArrayList<String>();
+        ArrayList<String> waiting_cars = new ArrayList<String>();
 
         // this array will hold the cars after they exit the roundabout/collection
-        ArrayList<String> out_cars = new ArrayList<String>();
+        ArrayList<String> after_light = new ArrayList<String>();
 
         // create random object to be used
         Random random = new Random();
@@ -34,14 +35,14 @@ public class traffic_system {
         System.out.println(">Movement Starts<");
         System.out.println();
         while (true){
-            String cr = AllCars.get(random.nextInt(AllCars.size()));   //get a random index to use
+            String cr = before_light.get(random.nextInt(before_light.size()));   //get a random index to use
 
             // check if a car has already been moved to the collection/round about
-            if (round_about.contains(cr)){
+            if (waiting_cars.contains(cr)){
                 ;
             }
             else {
-                round_about.add(cr);
+                waiting_cars.add(cr);
                 added ++;
             }
 
@@ -54,8 +55,8 @@ public class traffic_system {
             }
 
             // check if the round about is full - 100 cars
-            if (round_about.size() == 100) {
-                AllCars.clear();
+            if (waiting_cars.size() == 100) {
+                before_light.clear();
                 break;
             }
             
@@ -103,7 +104,7 @@ public class traffic_system {
             /*
             This conditional checks we have all cars has exited and breaks if true
             */
-            if (round_about.size() == 0) {
+            if (waiting_cars.size() == 0) {
                 break;
             }
 
@@ -119,12 +120,12 @@ public class traffic_system {
                     int counter = 0;
                     @Override
                     public void run() {
-                        if (round_about.size() != 0) {
+                        if (waiting_cars.size() != 0) {
                             System.out.println();
-                            System.out.println("YELLOW -> " + round_about.get(round_about.size() - 1) + " exited");
-                            out_cars.add(round_about.get(round_about.size() - 1));  // add the exited car to outer collection
+                            System.out.println("YELLOW -> " + waiting_cars.get(waiting_cars.size() - 1) + " exited");
+                            after_light.add(waiting_cars.get(waiting_cars.size() - 1));  // add the exited car to outer collection
                             System.out.println();
-                            round_about.remove(round_about.size() - 1);  // remove the exited car from round about collection
+                            waiting_cars.remove(waiting_cars.size() - 1);  // remove the exited car from round about collection
                             counter++;
                         }
                         else {
@@ -150,7 +151,7 @@ public class traffic_system {
             /*
             This conditional checks we have all cars has exited and breaks if true
             */
-            if (round_about.size() == 0) {
+            if (waiting_cars.size() == 0) {
                 break;
             }
 
@@ -167,12 +168,12 @@ public class traffic_system {
     
                     @Override
                     public void run() {
-                        if (round_about.size() != 0) {
+                        if (waiting_cars.size() != 0) {
                             System.out.println();
-                            System.out.println("GREEN -> " + round_about.get(round_about.size() - 1) + " exited");
-                            out_cars.add(round_about.get(round_about.size() - 1));  // add the exited car to outer collection
+                            System.out.println("GREEN -> " + waiting_cars.get(waiting_cars.size() - 1) + " exited");
+                            after_light.add(waiting_cars.get(waiting_cars.size() - 1));  // add the exited car to outer collection
                             System.out.println();
-                            round_about.remove(round_about.size() - 1);  // remove the exited car from round about collection
+                            waiting_cars.remove(waiting_cars.size() - 1);  // remove the exited car from round about collection
                             counter ++;
                         }
                         else {
@@ -198,7 +199,7 @@ public class traffic_system {
             /*
             This conditional checks we have all cars has exited and breaks if true
             */
-            if (round_about.size() == 0) {
+            if (waiting_cars.size() == 0) {
                 break;
             }
         }
